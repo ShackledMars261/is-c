@@ -1,0 +1,32 @@
+Client Id: name of starting service (Ex: database-service, email-service, etc.)
+Action Key: short reference to action (Ex: REGISTER, RUN, SEND, etc)
+Events: Data broadcasted with certain event is sent to all event listeners containing the same event
+
+
+Actions:
+REGISTER - register new service to database - occurs on client service startup 
+    ClientID:REGISTER
+SEND - send data to a different service
+    ClientID:SEND:VictimID:Data
+REMOVE - remove service from database - occurs on client service shutdown (final thing sent)
+    ClientID:REMOVE
+KILL - shutdown other service (data optional, if exists -> sent to victim along with KILL order)
+    ClientID:KILL:VictimID
+REGLIST - register event listener - occurs on client service startup
+    ListenerID:REGLIST:Event:ListenerEndpoint
+REMOVELIST - remove event listener - occurs on client service shutdown
+    ListenerID:REMOVELIST
+BROADCAST - broadcast event and data to listeners
+    ClientID:BROADCAST:Event:Data
+
+RUN - run something (tbd)
+AUTH - authenticate service/data (tbd)
+
+
+Databases:
+Server:
+    Tables:
+        - services (id (increment),serviceid,clientendpoint)
+        - listeners (id (increment),serviceid,listenerid,event,listenerendpoint)
+        - logging? (id (increment),time,serviceid,event,data)
+
