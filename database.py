@@ -17,8 +17,8 @@ def create_databases():
     )
 
     cursor = db.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS services(ID INT AUTO_INCREMENT PRIMARY KEY, service_id VARCHAR(255), client_address VARCHAR(255))")
-    cursor.execute("CREATE TABLE IF NOT EXISTS listeners(ID INT AUTO_INCREMENT PRIMARY KEY, service_id VARCHAR(255), listener_id VARCHAR(255), event VARCHAR(255), listener_address VARCHAR(255))")
+    cursor.execute("CREATE TABLE IF NOT EXISTS services(id INT AUTO_INCREMENT PRIMARY KEY, service_id VARCHAR(255), client_address VARCHAR(255))")
+    cursor.execute("CREATE TABLE IF NOT EXISTS listeners(id INT AUTO_INCREMENT PRIMARY KEY, service_id VARCHAR(255), listener_id VARCHAR(255), event VARCHAR(255), listener_address VARCHAR(255))")
 
 def register_service(serviceid, clientaddress):
     db = mysql.connector.connect(
