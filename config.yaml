@@ -1,0 +1,10 @@
+server:
+  ip: "localhost"
+  port: 8080
+
+db:
+  ip: "localhost"
+  port: 3306
+  name: "ISC"
+  username: "root"
+  password: "root"

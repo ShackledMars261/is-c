@@ -5,19 +5,22 @@ Events: Data broadcasted with certain event is sent to all event listeners conta
 
 Actions:
 REGISTER - register new service to database - occurs on client service startup 
-    ClientID:REGISTER
+    {ClientID: string, Action: "REGISTER", ClientAddress: string}
 SEND - send data to a different service
-    ClientID:SEND:VictimID:Data
+    {ClientID: string, Action: "SEND", VictimID: string, Data: tbd}
 REMOVE - remove service from database - occurs on client service shutdown (final thing sent)
-    ClientID:REMOVE
+    {ClientID: string, Action: "REMOVE"}
 KILL - shutdown other service (data optional, if exists -> sent to victim along with KILL order)
-    ClientID:KILL:VictimID
+    {ClientID: string, Action: "KILL", VictimID: string}
+GETIP - get ip and port of other service
+    {ClientID: string, Action: "GETIP", VictimID: string}
 REGLIST - register event listener - occurs on client service startup
-    ListenerID:REGLIST:Event:ListenerEndpoint
+    {ListenerID: string, Action: "REGLIST", Event: string, ListenerEndpoint: string}
 REMOVELIST - remove event listener - occurs on client service shutdown
-    ListenerID:REMOVELIST
+    {ListenerID: string, Action: "REMOVELIST"}
 BROADCAST - broadcast event and data to listeners
     ClientID:BROADCAST:Event:Data
+    {ClientID: string, Action: "BROADCAST", Event: string, Data: tbd}
 
 RUN - run something (tbd)
 AUTH - authenticate service/data (tbd)
@@ -26,7 +29,7 @@ AUTH - authenticate service/data (tbd)
 Databases:
 Server:
     Tables:
-        - services (id (increment),serviceid,clientendpoint)
-        - listeners (id (increment),serviceid,listenerid,event,listenerendpoint)
+        - services (id (increment),serviceid,clientaddress)
+        - listeners (id (increment),serviceid,listenerid,event,listeneraddress)
         - logging? (id (increment),time,serviceid,event,data)
 

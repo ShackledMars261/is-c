@@ -1,0 +1,10 @@
+version: '3'
+
+name: isc
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 127.0.0.1:8080:8080
