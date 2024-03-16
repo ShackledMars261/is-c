@@ -28,5 +28,6 @@ A modular service for communication between scripts and services
 
 # TODO
 - Fix bugs
+- Come up with name (current one is pretty trash)
 - Update README
 - Use more features in the example
