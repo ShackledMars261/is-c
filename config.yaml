@@ -1,10 +1,11 @@
 server:
-  ip: "localhost"
+  ip: "0.0.0.0"
   port: 8080
+  debug: False
 
 db:
-  ip: "localhost"
+  ip: "127.0.0.1"
   port: 3306
-  name: "ISC"
+  name: "isc"
   username: "root"
   password: "root"

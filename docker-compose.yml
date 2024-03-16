@@ -1,10 +1,27 @@
-version: '3'
+version: '3.1'
 
 name: isc
 services:
   app:
-    build: .
+    build: 
+      network: host
     volumes:
       - .:/app
+    environment:
+      - FLASK_APP=server
     ports:
       - 127.0.0.1:8080:8080
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: container-registry.oracle.com/mysql/community-server:latest
+    restart: on-failure
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=isc
+      - MYSQL_ROOT_HOST=%
+    

@@ -20,13 +20,12 @@ KILL - shutdown other service (data (can be blank) -> sent to victim along with 
     {ClientID: string, Action: "KILL", VictimID: string, Data: string}
 GETIP - get ip and port of other service [x]
     {ClientID: string, Action: "GETIP", VictimID: string}
-REGLIST - register event listener - occurs on client service startup []
-    {ListenerID: string, Action: "REGLIST", Event: string, ListenerEndpoint: string}
-REMOVELIST - remove event listener - occurs on client service shutdown []
-    {ListenerID: string, Action: "REMOVELIST"}
-BROADCAST - broadcast event and data to listeners []
-    ClientID:BROADCAST:Event:Data
-    {ClientID: string, Action: "BROADCAST", Event: string, Data: tbd}
+REGLIST - register event listener - occurs on client service startup [x]
+    {ClientID: string, Action: "REGLIST", ListenerID: string, Event: string, ListenerEndpoint: string}
+REMOVELIST - remove event listener - occurs on client service shutdown [x]
+    {ClientID: string, Action: "REMOVELIST", ListenerID: string}
+BROADCAST - broadcast event and data to listeners [x]
+    {ClientID: string, Action: "BROADCAST", Event: string, Data: {key1: value1, key2: value2,...}}
 
 RUN - run something (tbd)
 AUTH - authenticate service/data (tbd)
@@ -39,3 +38,4 @@ Server:
         - listeners (id (increment),service_id,listener_id,event,listener_address)
         - logging? (id (increment),time,serviceid,event,data)
 
+TODO:

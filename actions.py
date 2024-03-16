@@ -1,8 +1,18 @@
 import helpers
 import requests
 import database
+import json
 
 cfg = helpers.importyaml()
+
+def register_service(clientid, address):
+    used_ports = database.get_used_ports()
+    used_ports.append(cfg["server"]["port"])
+    used_ports = sorted(used_ports)
+    last_port = used_ports[-1]
+    port = last_port + 1
+    database.register_service(clientid, address, port)
+    return port
 
 def send_data(clientid, victimid, data):
     victim_address = database.get_client_address(victimid)
@@ -11,7 +21,10 @@ def send_data(clientid, victimid, data):
         "action": "SEND",
         "data": data
     }
-    r = requests.post(victim_address, data=jsondata)
+    headers = {
+        "Content-Type": "application/json"
+    }
+    r = requests.post(victim_address, data=jsondata, headers=headers)
     return r.status_code
 
 def send_kill(clientid, victimid, data):
@@ -21,5 +34,44 @@ def send_kill(clientid, victimid, data):
         "action": "KILL",
         "data": data
     }
-    r = requests.post(victim_address, data=jsondata)
+    headers = {
+        "Content-Type": "application/json"
+    }
+    r = requests.post(victim_address, data=jsondata, headers=headers)
     return r.status_code
+
+def register_listener(clientid, listenerid, event, listeneraddress):
+    database_exists = database.check_if_service_exists(clientid)
+    if database_exists:
+        database.register_listener(clientid, listenerid, event, listeneraddress)
+        return 200
+    else:
+        return 404
+
+def remove_service(clientid):
+    listeners = database.get_listener_ids_by_service_id(clientid)
+    for listenerid in listeners:
+        database.remove_listener(clientid, listenerid)
+    database.remove_service(clientid)
+
+def broadcast_event(clientid, event, data):
+    database_exists = database.check_if_service_exists(clientid)
+    if database_exists:
+        listeners = database.get_listeners_by_event(event)
+        for listener in listeners:
+            print(listener)
+            clientaddress = database.get_client_address(clientid)
+            clientport = database.get_client_port(listener["clientid"])
+            # endpointurl = "http://" + clientaddress + listener["listener_address"]
+            endpointurl = "http://" + "127.0.0.1" + ":" + clientport + listener["listener_address"]
+            print(endpointurl)
+            jsondata = json.dumps({
+                "source": clientid,
+                "event": event,
+                "data": data
+            })
+            headers = {
+                "Content-Type": "application/json"
+            }
+            r = requests.post(endpointurl, data=jsondata, headers=headers)
+            print(f"Event sent - from: {clientid} - to: {endpointurl} - event: {event} - status: {r.status_code}")
