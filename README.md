@@ -25,3 +25,8 @@ A modular service for communication between scripts and services
 
 # Requests
 - A postman collection with the major requests is provided in the examples directory
+
+# TODO
+- Fix bugs
+- Update README
+- Use more features in the example
