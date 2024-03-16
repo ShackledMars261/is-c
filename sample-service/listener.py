@@ -11,11 +11,8 @@ app = Flask(__name__)
 @app.route("/listener", methods=["POST"])
 def listener():
     requestdata = request.get_json()
-    print(requestdata)
     data = requestdata["data"]
-    print(data)
     number = random_number(data["lowerBound"], data["upperBound"])
-    print(number)
     responsedata = json.dumps({
         "lowerBound": data["lowerBound"],
         "upperBound": data["upperBound"],

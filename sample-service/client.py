@@ -57,7 +57,7 @@ def broadcast_event(event, data):
     }
     jsondata = json.dumps({
         "ClientID": "example-service",
-        "ACTION": "BROADCAST",
+        "Action": "BROADCAST",
         "Event": event,
         "Data": data
     })

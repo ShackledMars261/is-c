@@ -2,6 +2,7 @@ import helpers
 import requests
 import database
 import json
+import os
 
 cfg = helpers.importyaml()
 
@@ -59,12 +60,11 @@ def broadcast_event(clientid, event, data):
     if database_exists:
         listeners = database.get_listeners_by_event(event)
         for listener in listeners:
-            print(listener)
             clientaddress = database.get_client_address(clientid)
             clientport = database.get_client_port(listener["clientid"])
-            # endpointurl = "http://" + clientaddress + listener["listener_address"]
-            endpointurl = "http://" + "127.0.0.1" + ":" + clientport + listener["listener_address"]
-            print(endpointurl)
+            if os.getenv("RUNNING_IN_DOCKER"):
+                clientaddress = "host.docker.internal"
+            endpointurl = "http://" + clientaddress + ":" + clientport + listener["listener_address"]
             jsondata = json.dumps({
                 "source": clientid,
                 "event": event,

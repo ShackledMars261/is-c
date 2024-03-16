@@ -66,6 +66,7 @@ def check_if_service_exists(service_id):
     sql = "SELECT * FROM services WHERE service_id = %s"
     cursor.execute(sql, (service_id,))
     row = cursor.fetchone()
+    print(row)
     return row != None
 
 def get_client_address(service_id):
