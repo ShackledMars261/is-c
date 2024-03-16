@@ -1,12 +1,12 @@
 import yaml
 
-def importyaml(file="./sample-service/config.yaml"):
+def importyaml(file="./examples/sample-service/config.yaml"):
     with open(file, "r") as f:
         config = yaml.safe_load(f)
         f.close()
     return config
 
-def writeyaml(category, key, value, file="./sample-service/config.yaml"):
+def writeyaml(category, key, value, file="./examples/sample-service/config.yaml"):
     with open(file, "r") as f:
         config = yaml.safe_load(f)
         f.close()

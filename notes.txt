@@ -39,3 +39,5 @@ Server:
         - logging? (id (increment),time,serviceid,event,data)
 
 TODO:
+- improve example client
+- 
