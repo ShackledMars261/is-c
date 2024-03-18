@@ -31,3 +31,6 @@ A modular service for communication between scripts and services
 - Come up with name (current one is pretty trash)
 - Update README
 - Use more features in the example
+- Update wellness check to check connected services (new client endpoint)
+- GETIP and GETPORT actions (for clients)
+- 
