@@ -34,3 +34,4 @@ A modular service for communication between scripts and services
 - Update wellness check to check connected services (new client endpoint)
 - GETIP and GETPORT actions (for clients)
 - Run a wellness check to all connected services on a time interval (i.e., 1 hour, configurable)
+- Make web dashboard to view current services and listeners
