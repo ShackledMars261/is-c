@@ -75,3 +75,18 @@ def broadcast_event(clientid, event, data):
             }
             r = requests.post(endpointurl, data=jsondata, headers=headers)
             print(f"Event sent - from: {clientid} - to: {endpointurl} - event: {event} - status: {r.status_code}")
+
+def interval_wellness_check():
+    services = database.get_all_services()
+    for service in services:
+        clientid = service["clientid"]
+        clientaddress = database.get_client_address(clientid)
+        clientport = database.get_client_port(clientid)
+        if os.getenv("RUNNING_IN_DOCKER"):
+            clientaddress = "host.docker.internal"
+        endpointurl = "http://" + clientaddress + ":" + clientport + "/up"
+        r = requests.get(endpointurl)
+        print(f"Wellness check - client: {clientid} - status: {r.status_code}")
+        if r.status_code != 200:
+            remove_service(clientid)
+            print(f"Client {clientid} removed due to wellness check failure")

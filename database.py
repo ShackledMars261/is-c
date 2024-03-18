@@ -182,5 +182,23 @@ def get_listeners_by_event(event):
         listeners.append(listener)
     return listeners
 
+def get_all_services():
+    db = mysql.connector.connect(
+        host = dburl,
+        user = dbuser,
+        password = dbpass,
+        database = dbname
+    )
+
+    cursor = db.cursor()
+    sql = "SELECT service_id, client_address, client_port FROM services"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    services = []
+    for row in rows:
+        service = {"service_id": row[0], "client_address": row[1], "client_port": row[2]}
+        services.append(service)
+    return services
+
 if __name__ == "__main__":
     create_databases()

@@ -3,6 +3,8 @@ import database
 import actions
 import os
 from flask import Flask, request
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
 
 cfg = helpers.importyaml()
 database.create_databases()
@@ -77,6 +79,11 @@ def incomingrequest():
 def wellness_check():
     return {"status": "200"}
 
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=actions.interval_wellness_check, trigger="interval", seconds=int(cfg["server"]["wellnessinterval"]))
+scheduler.start()
+atexit(lambda: scheduler.shutdown())
+
 if __name__ == "__main__":
     debug = cfg["server"]["debug"]
-    app.run(debug=debug, host=serverhost, port=serverport)
+    app.run(debug=debug, host=serverhost, port=serverport, use_reloader=False)

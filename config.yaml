@@ -2,6 +2,7 @@ server:
   ip: "0.0.0.0"
   port: 8080
   debug: False
+  wellness_check_interval: 600 # in seconds
 
 db:
   ip: "127.0.0.1"
